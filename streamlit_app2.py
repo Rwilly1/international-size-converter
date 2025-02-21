@@ -16,7 +16,10 @@ from size_converter import (
 load_dotenv()
 
 # Initialize OpenAI
-openai.api_key = os.getenv('OPENAI_API_KEY')
+openai.api_key = st.secrets["OPENAI_API_KEY"] if "OPENAI_API_KEY" in st.secrets else os.getenv('OPENAI_API_KEY')
+
+if not openai.api_key:
+    st.error("OpenAI API key is not set. Please set it in your environment variables or Streamlit secrets.")
 
 # Configure page first
 st.set_page_config(page_title="International Size Converter", layout="wide")
